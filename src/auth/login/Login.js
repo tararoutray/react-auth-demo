@@ -13,7 +13,12 @@ const Login = () => {
         const formElement = document.querySelector('#loginForm');
         const formData = new FormData(formElement);
         const formDataJSON = Object.fromEntries(formData);
+        const btnPointer = document.querySelector('#login-btn');
+        btnPointer.innerHTML = 'Please wait..';
+        btnPointer.setAttribute('disabled', true);
         axios.post(loginAPI, formDataJSON).then((response) => {
+            btnPointer.innerHTML = 'Login';
+            btnPointer.removeAttribute('disabled');
             const data = response.data;
             const token = data.token;
             if (!token) {
@@ -27,6 +32,8 @@ const Login = () => {
             }, 500);
 
         }).catch((error) => {
+            btnPointer.innerHTML = 'Login';
+            btnPointer.removeAttribute('disabled');
             alert("Oops! Some error occured.");
         });
     }
@@ -46,7 +53,7 @@ const Login = () => {
                                 <FormLabel htmlFor={'login-password'}>Password</FormLabel>
                                 <input type={'password'} className="form-control" id={'login-password'} name="password" required />
                             </FormGroup>
-                            <Button type="submit" className="btn-success mt-2">Login</Button>
+                            <Button type="submit" className="btn-success mt-2" id="login-btn">Login</Button>
                         </Form>
                     </Col>
                 </Row>
