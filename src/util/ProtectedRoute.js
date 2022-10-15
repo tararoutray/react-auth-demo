@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Route, useNavigate } from "react-router-dom";
 
-const ProtectedRoute = ({children}) => {
+const ProtectedRoute = (props) => {
 
     const navigate = useNavigate();
 
@@ -20,7 +20,13 @@ const ProtectedRoute = ({children}) => {
         checkUserToken();
     }, [isLoggedIn]);
 
-    return (isLoggedIn) && children;
+    return (
+        <React.Fragment>
+            {
+                isLoggedIn ? props.children : null
+            }
+        </React.Fragment>
+    );
 }
 
 export default ProtectedRoute;
